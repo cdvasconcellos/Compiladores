@@ -1,5 +1,6 @@
 # Disciplina de Compiladores
-Exemplos para aula de Compiladores (todos exemplos são implementados em um único arquivo):
+Exemplos para aula de Compiladores (os exemplos são implementados em um único arquivo):
+* Compiladores.pdf - Slides usados na disciplina de Compiladores.
 * lex.c - Exemplo de implementação de um analisador léxico para números e operadores aritméticos.
 * ParserDR.c - Exemplo de implementação de um analisador sintático descendente recursivo para expressões aritméticas.
 * ParserLL.c - Exemplo de implementação de um analisador sintático LL(1) para expressões aritméticas.
