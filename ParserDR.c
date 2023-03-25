@@ -1,5 +1,5 @@
 /*****************************************************************
-* Interpretador de expressoes LL(1)                              *
+* Interpretador de expressoes Descendente Recursivo              *
 * Exemplo p/ Disciplina de Compiladores                          *
 * Cristiano Damiani Vasconcellos.                                *
 ******************************************************************/
@@ -19,7 +19,6 @@ F  ->(E)
      |CONST */
 
 #include <stdio.h>
-#include <conio.h>
 #include <ctype.h>
 #include <stdlib.h>
 
@@ -124,8 +123,8 @@ void erro()
 
    puts(str);
    for (i = 0; i < pos; i++)
-      putch(' ');
-   putch('^');
+      putchar(' ');
+   printf("^\n");
    exit(1);
 }
 
@@ -227,7 +226,7 @@ int lex (char *str, int *pos)
 int main()
 {
    printf("Expressao:");
-   gets(str);
+   scanf("%s", str);
    lookahead = lex(str, &pos);
    partida();
    printf("Expressao Correta");
