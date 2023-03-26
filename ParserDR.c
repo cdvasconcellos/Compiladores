@@ -21,6 +21,7 @@ F  ->(E)
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
+#define TSTR 200
 
 #define ERRO   0x00
 #define CONST  0x01
@@ -226,7 +227,7 @@ int lex (char *str, int *pos)
 int main()
 {
    printf("Expressao:");
-   scanf("%s", str);
+   fgets(str, TSTR, stdin);
    lookahead = lex(str, &pos);
    partida();
    printf("Expressao Correta");
