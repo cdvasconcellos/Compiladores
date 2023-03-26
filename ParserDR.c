@@ -174,6 +174,7 @@ int lex (char *str, int *pos)
                   case ')':
                         (*pos)++;
                         return FPAR;
+                  case '\n':
                   case '\0':
                         return FIM;
                   default:
