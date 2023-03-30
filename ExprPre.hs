@@ -19,4 +19,8 @@ parserEP e = runParser partida [] "Expressões pre-fixadas" e
 
 parserExpr s = case parserEP s of
                      Left er -> print er
-                     Right v -> (print "resultado" >> print v)
+                     Right v -> print v
+                     
+main = do putStr "Expressão:"
+          e <- getLine
+          parserExpr e
