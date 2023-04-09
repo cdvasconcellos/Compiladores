@@ -3,6 +3,7 @@ import Text.Parsec
 partida :: Parsec String u Integer
 partida = do {e <- expr; eof; return e}
 
+
 expr = do {spaces; expr'}
 
 expr' = do {char '+'; e1 <- expr; e2 <- expr; return (e1 + e2)}
@@ -18,8 +19,10 @@ parserEP e = runParser partida [] "Expressões pre-fixadas" e
 
 parserExpr s = case parserEP s of
                      Left er -> print er
-                     Right v -> print v
+                     Right v -> (print "resultado" >> print v)
                      
 main = do putStr "Expressão:"
-          e <- getLine
+          e <- getLine 
           parserExpr e
+                     
+                     
