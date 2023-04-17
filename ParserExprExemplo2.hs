@@ -1,34 +1,37 @@
 import Text.Parsec
 import Text.Parsec.Expr
 import qualified Text.Parsec.Token as T
-import Text.Parsec.Language (emptyDef)
+import Text.Parsec.Language
 
-lexico = T.makeTokenParser emptyDef
+lingDef = emptyDef
+          { T.commentStart      = "{-"
+            , T.commentEnd      = "-}"
+            , T.commentLine     = "--"
+            , T.reservedOpNames = ["+", "-", "/", "*"]
+          }  
 
-symbol = T.symbol lexico
+lexico = T.makeTokenParser lingDef
+
+natural       = T.natural lexico
+symbol        = T.symbol lexico
+parens        = T.parens lexico
+reservedOp    = T.reservedOp lexico
 
 tabela   = [[prefix "-" negate]
-            , [binario "*" (*) AssocLeft, binario "/" (div) AssocLeft ]
+            , [binario "*" (*) AssocLeft, binario "/" div AssocLeft ]
             , [binario "+" (+) AssocLeft, binario "-" (-)   AssocLeft ]
            ]
 
-
-binario  name fun assoc = Infix (do{symbol name; return fun }) assoc
-prefix   name fun       = Prefix (do{symbol name; return fun })
+binario  name fun assoc = Infix (do{reservedOp name; return fun }) assoc
+prefix   name fun       = Prefix (do{reservedOp name; return fun })
    
-expr    = buildExpressionParser tabela fator'
-         <?> "expression"   
-          
-constante = do {d <- many1 digit; return (read d)}
-            <?> "number"
-    
-   
-fator    =  do {symbol "("; v <- expr; symbol ")"; return v}
-            <|> constante
-            <?> "term"
+expr = buildExpressionParser tabela fator
+       <?> "expression"   
+        
+fator = parens expr
+       <|> natural
+       <?> "simple expression"
             
-fator' = do {spaces; v <- fator; spaces; return v} 
-
 partida :: Parsec String u Integer
 partida = do {e <- expr; eof; return e}
 
